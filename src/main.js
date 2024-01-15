@@ -1,19 +1,19 @@
-import './assets/main.css'
+import "./assets/main.css";
 
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 
-import { proxy } from 'ajax-hook'
+import { proxy } from "ajax-hook";
 
 proxy({
+  onError: (err, handler) => {
+    console.group("NPM ajax-hook error:");
+    console.log("err.type: ", err.type);
 
-    onError:(err, handler) => {
-        console.warn('ajax error')
-        console.log(err.type);
-        
-        handler.next(err);
-    }
+    console.groupEnd();
 
-})
+    handler.next(err);
+  },
+});
 
-createApp(App).mount('#app')
+createApp(App).mount("#app");

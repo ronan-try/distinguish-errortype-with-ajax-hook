@@ -1,18 +1,24 @@
 <template>
-  <main>
-    <button @click="hahaha">fire cancle</button>
-    <button @click="hahaha2">fire error</button>
+  <main style="font-size: 30px">
+    <button @click="onClickCancleRequest">Cancle Request</button>
+    <button @click="onClickErrorRequest">Newwork Down Request</button>
+
+    <img src="./assets/result.png" />
   </main>
 </template>
 
 <script setup>
 import { onMounted } from "vue";
 
-const hahaha = () => {
+const onClickCancleRequest = () => {
+  console.log("");
+  console.warn("onClickCancleRequest");
+
   const xhr = new XMLHttpRequest();
   xhr.open("GET", "https://jsonplaceholder.typicode.com/todos/1");
 
   xhr.onreadystatechange = function () {
+    console.log("onreadystatechange:");
     console.log(xhr.readyState, xhr.status, xhr);
   };
   xhr.onabort = function (e) {
@@ -27,11 +33,15 @@ const hahaha = () => {
   setTimeout(() => xhr.abort(), 1000 * 0);
 };
 
-const hahaha2 = () => {
+const onClickErrorRequest = () => {
+  console.log("");
+  console.warn("onClickErrorRequest");
+
   const xhr = new XMLHttpRequest();
   xhr.open("GET", "https://jsonplaceholder.typicode.com/todos/1");
 
   xhr.onreadystatechange = function () {
+    console.log("onreadystatechange:");
     console.log(xhr.readyState, xhr.status, xhr);
   };
   xhr.onabort = function (e) {
@@ -46,11 +56,7 @@ const hahaha2 = () => {
   }, 1000 * 3);
 };
 
-onMounted(() => {
-  console.log("mounted!");
-});
-
-hahaha;
+onMounted(() => {});
 </script>
 
 <style>
