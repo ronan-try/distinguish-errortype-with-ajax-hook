@@ -1,8 +1,17 @@
 <template>
   <main style="font-size: 30px">
     <button @click="onClickCancleRequest">Cancle Request</button>
-    <button @click="onClickErrorRequest">Newwork Down Request</button>
 
+    <br />
+    <br />
+    <button @click="onClickNetworkDownRequest">Newwork Down Request</button>
+
+    <br />
+    <br />
+    <button @click="onClickTimeoutRequest">Newwork Timeout Request</button>
+
+    <br />
+    <br />
     <img src="./assets/result.png" />
   </main>
 </template>
@@ -22,10 +31,10 @@ const onClickCancleRequest = () => {
     console.log(xhr.readyState, xhr.status, xhr);
   };
   xhr.onabort = function (e) {
-    console.log("onabort:", e);
+    console.error("onabort:", e);
   };
   xhr.onerror = function (e) {
-    console.log("onerror:", e);
+    console.error("onerror:", e);
   };
 
   xhr.send();
@@ -33,9 +42,9 @@ const onClickCancleRequest = () => {
   setTimeout(() => xhr.abort(), 1000 * 0);
 };
 
-const onClickErrorRequest = () => {
+const onClickNetworkDownRequest = () => {
   console.log("");
-  console.warn("onClickErrorRequest");
+  console.warn("onClickNetworkDownRequest");
 
   const xhr = new XMLHttpRequest();
   xhr.open("GET", "https://jsonplaceholder.typicode.com/todos/1");
@@ -45,15 +54,41 @@ const onClickErrorRequest = () => {
     console.log(xhr.readyState, xhr.status, xhr);
   };
   xhr.onabort = function (e) {
-    console.log("onabort:", e);
+    console.error("onabort:", e);
   };
   xhr.onerror = function (e) {
-    console.log("onerror:", e);
+    console.error("onerror:", e);
   };
 
   setTimeout(() => {
     xhr.send();
   }, 1000 * 3);
+};
+
+const onClickTimeoutRequest = () => {
+  console.log("");
+  console.warn("onClickTimeoutRequest");
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "https://jsonplaceholder.typicode.com/todos/1");
+  xhr.timeout = 5;
+
+  xhr.onreadystatechange = function () {
+    console.log("onreadystatechange:");
+    console.log(xhr.readyState, xhr.status, xhr);
+  };
+  xhr.onabort = function (e) {
+    console.error("onabort:", e);
+  };
+  xhr.onerror = function (e) {
+    console.error("onerror:", e);
+  };
+  // 监听 timeout 事件
+  xhr.ontimeout = function (e) {
+    console.error("ontimeout", e);
+  };
+
+  xhr.send();
 };
 
 onMounted(() => {});
